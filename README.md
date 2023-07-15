@@ -36,8 +36,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## This porject uses the following dependencies
 
-- [bcryptjs](https://www.npmjs.com/package/bcryptjs) - for encryption of account passwords
-- [firebase](https://www.npmjs.com/package/firebase) - to store images
+- [bcryptjs](https://www.npmjs.com/package/bcryptjs) 
+- [firebase](https://www.npmjs.com/package/firebase) 
 - [joi]()
 - [js-cookie]()
 - [jsonwebtoken]()
