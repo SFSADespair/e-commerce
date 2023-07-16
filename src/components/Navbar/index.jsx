@@ -1,7 +1,9 @@
 'use client'
 
-import { adminNavOptions, navOptions, styles } from "@/utils"
-import { Fragment, useState } from "react"
+import { GlobalContext } from "@/context"
+import { adminNavOptions, navOptions } from "@/utils"
+import { Fragment, useContext, useState } from "react"
+import CommonModal from "../CommonModal"
 
 const isAdminView = false
 const isAuthUser = false
@@ -9,10 +11,17 @@ const user = {
     role: 'admin'
 }
 
-function NavItems() {
+const styles = {
+    button: 'mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white',
+}
+
+function NavItems({ isModalView = false }) {
     return (
-        <div className="items-center justify-between w-full md:flex md:w-auto" id='nav-items'>
-            <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 bg-white">
+        <div className={`items-center justify-between w-full md:flex md:w-auto ${isModalView ? "" : 'hidden'}`} id='nav-items'>
+            <ul className={`flex flex-col p-4 md:p-0 mt-4 font-medium rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 bg-white ${
+                isModalView ? "border-none": 'border border-gray-100'
+                }`}
+            >
                 {
                     isAdminView ? adminNavOptions.map(item => (
                         <li 
@@ -36,7 +45,9 @@ function NavItems() {
 }
 
 export default function Navbar() {
-    const [showNavPopup, setShowNavPopup] = useState(false)
+    // const [showNavPopup, setShowNavPopup] = useState(false)
+
+    const {showNavModal, setShowNavModal} = useContext(GlobalContext)
 
     return (
         <>
@@ -78,7 +89,7 @@ export default function Navbar() {
                             focus:outline-none focus:cursor-pointer"
                             aria-controls="navbar-sticky"
                             aria-expanded='false'
-                            onClick={() => setShowNavPopup(prv => !prv)}
+                            onClick={() => setShowNavModal(prv => !prv)}
                         >
                             <span className="sr-only">Open Main Menu</span>
                             <svg 
@@ -95,11 +106,15 @@ export default function Navbar() {
                                 ></path>
                             </svg>
                         </button>
-
                     </div>
                     <NavItems />
                 </div>
             </nav>
+            <CommonModal 
+                showModalTitle={false}
+                mainContent={<NavItems isModalView={true} />}
+                show={showNavModal} setShow={setShowNavModal} 
+            />
         </>
     )
 }
