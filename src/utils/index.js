@@ -38,3 +38,61 @@ export const adminNavOptions = [
         path: '/admin-view/add-product'
     }
 ]
+
+export const registrationFormControls = [
+    {
+        id: 'name',
+        type: 'text',
+        placeholder: 'Enter your name',
+        label: 'Name',
+        componnentType: 'input'
+    },
+    {
+        id: 'email',
+        type: 'email',
+        placeholder: 'Enter your email',
+        label: 'Email',
+        componnentType: 'input'
+    },
+    {
+        id: 'password',
+        type: 'password',
+        placeholder: 'Enter your password',
+        label: 'Password',
+        componnentType: 'input'
+    },
+    {
+        id: 'role',
+        type: '',
+        placeholder: '',
+        label: 'Role',
+        componnentType: 'select',
+        options: [
+            {
+                id: 'admin',
+                label: 'Admin'
+            },
+            {
+                id: 'customer',
+                label: 'Customer'
+            }
+        ]
+    }
+]
+
+export const loginFromControls = [
+    {
+        id: 'email',
+        type: 'email',
+        placeholder: 'Enter your email',
+        label: 'Email',
+        componnentType: 'input'
+    },
+    {
+        id: 'password',
+        type: 'password',
+        placeholder: 'Enter your password',
+        label: 'Password',
+        componnentType: 'input'
+    }
+]
