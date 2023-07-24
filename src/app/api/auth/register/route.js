@@ -25,7 +25,7 @@ export const POST = async(req) => {
     if(error) {
         return NextResponse.json({
             success: false,
-            message: email.details[0]
+            message: error.details[0].message
         })
     }
 
@@ -47,7 +47,7 @@ export const POST = async(req) => {
             })
 
             if (newUser)
-                NextResponse.json({
+                return NextResponse.json({
                     success: true,
                     message: 'Account Created'
                 })
@@ -57,7 +57,7 @@ export const POST = async(req) => {
 
         return NextResponse.json({
             success: false,
-            message: e.message
+            message: e.details[0].message
         })
     }
 }

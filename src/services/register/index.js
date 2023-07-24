@@ -9,7 +9,6 @@ export const registerNewUser = async (formData) => {
         })
 
         const data = response.json()
-
         return data
     } catch(e) {
         console.log('error', e);
