@@ -57,7 +57,7 @@ export const POST = async(req) => {
 
         return NextResponse.json({
             success: false,
-            message: e.details[0].message
+            message: "Something went wrong! Please try again later."
         })
     }
 }
