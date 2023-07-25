@@ -4,12 +4,12 @@ import { GlobalContext } from "@/context"
 import { adminNavOptions, navOptions } from "@/utils"
 import { Fragment, useContext, useState } from "react"
 import CommonModal from "../CommonModal"
+import Cookies from "js-cookie"
+import Router from "next/router"
+import { useRouter } from "next/navigation"
 
 const isAdminView = false
-const isAuthUser = false
-const user = {
-    role: 'admin'
-}
+
 
 const styles = {
     button: 'mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white rounded-3xl',
@@ -45,9 +45,17 @@ function NavItems({ isModalView = false }) {
 }
 
 export default function Navbar() {
-    // const [showNavPopup, setShowNavPopup] = useState(false)
-
     const {showNavModal, setShowNavModal} = useContext(GlobalContext)
+    const {user, isAuth, setIsAuth, setUser}  = useContext(GlobalContext)
+    const router = useRouter()
+
+    const handleLogout = () => {
+        setIsAuth(false)
+        setUser(null)
+        Cookies.remove('token')
+        localStorage.clear()
+        router.push('/')
+    }
 
     return (
         <>
@@ -58,7 +66,7 @@ export default function Navbar() {
                     </div>
                     <div className="flex md:order-2 gap-2">
                         {
-                            !isAdminView && isAuthUser ? (
+                            !isAdminView && isAuth ? (
                                 <Fragment>
                                     <button className={styles.button}>Account</button>
                                     <button className={styles.button}>Cart</button>
@@ -77,10 +85,20 @@ export default function Navbar() {
                         }
 
                         {
-                            isAuthUser ? (
-                                <button className={styles.button}>LogOut</button>
+                            isAuth ? (
+                                <button 
+                                    className={styles.button}
+                                    onClick={handleLogout}
+                                >
+                                    LogOut
+                                </button>
                             ) : (
-                                <button className={styles.button}>LogIn</button>
+                                <button 
+                                    className={styles.button}
+                                    onClick={() => router.push('/login')}
+                                >
+                                    LogIn
+                                </button>
                             )
                         }
 

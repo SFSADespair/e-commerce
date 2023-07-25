@@ -2,7 +2,6 @@
 
 import { loginFromControls } from "@/utils"
 import InputComponent from "@/components/FormElements/InputComponent"
-import SelectComponent from "@/components/FormElements/SelectComponent"
 import { useRouter } from "next/navigation"
 import { useContext, useEffect, useState } from "react"
 import { login } from "@/services/login"
@@ -24,13 +23,19 @@ const initForm = {
 }
 
 export default function Login() {
-    const router = useRouter()
-    const [formData, setFormData] = useState(initForm)
     const { 
-        commonLoader, setCommonLoader, 
         isAuth, setIsAuth, 
-        user, setUser
+        user, setUser,
+        componentLevelLoader, setComponentLevelLoader
     } = useContext(GlobalContext)
+
+    const router = useRouter()
+
+    useEffect(() => {
+        if (isAuth) router.push('/')
+    }, [isAuth])
+
+    const [formData, setFormData] = useState(initForm)
     
     const isValid = () => {
         return formData && formData.email && formData.email.trim() !== '' 
@@ -39,12 +44,12 @@ export default function Login() {
     }
 
     const handleLogin = async () => {
+        setComponentLevelLoader({loading: true, id: ''})
         const res = await login(formData)
         if (res.success) {
             toast.success(res.message, {
                 position: toast.POSITION.TOP_RIGHT
             })
-            setCommonLoader(false)
 
             Cookies.set('token', res?.data.token)
             localStorage.setItem('user', JSON.stringify(res?.data?.user))
@@ -53,11 +58,12 @@ export default function Login() {
             setUser(res?.data?.user)
             
             setFormData(initForm)
+            setComponentLevelLoader({loading: false, id: ''})
         } else {
             toast.error(res.message, {
                 position: toast.POSITION.TOP_RIGHT
             })
-            setCommonLoader(false)
+            setComponentLevelLoader({loading: false, id: ''})
 
             setIsAuth(false)
             setFormData(initForm)
@@ -104,11 +110,11 @@ export default function Login() {
                                         onClick={handleLogin}
                                     >
                                         {
-                                            commonLoader ? 
+                                            componentLevelLoader && componentLevelLoader.loading ? 
                                             <ComponentLevelLoader 
                                                 text={'Registering'}
                                                 color={'#fff'}
-                                                loading={commonLoader}
+                                                loading={componentLevelLoader && componentLevelLoader.loading}
 
                                             /> : 'Login'
                                         }
