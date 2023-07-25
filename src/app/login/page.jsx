@@ -4,11 +4,13 @@ import { loginFromControls } from "@/utils"
 import InputComponent from "@/components/FormElements/InputComponent"
 import SelectComponent from "@/components/FormElements/SelectComponent"
 import { useRouter } from "next/navigation"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { login } from "@/services/login"
 import Notification from "@/components/Notification"
 import { GlobalContext } from "@/context"
 import { toast } from "react-toastify"
+import Cookies from "js-cookie"
+import ComponentLevelLoader from "@/components/Loader/componentlevel"
 
 const styles = {
     button: `disabled:opacity-50 inline-flex w-full items-center justify-center bg-black 
@@ -24,7 +26,11 @@ const initForm = {
 export default function Login() {
     const router = useRouter()
     const [formData, setFormData] = useState(initForm)
-    const {commonLoader, setCommonLoader} = useContext(GlobalContext)
+    const { 
+        commonLoader, setCommonLoader, 
+        isAuth, setIsAuth, 
+        user, setUser
+    } = useContext(GlobalContext)
     
     const isValid = () => {
         return formData && formData.email && formData.email.trim() !== '' 
@@ -38,16 +44,31 @@ export default function Login() {
             toast.success(res.message, {
                 position: toast.POSITION.TOP_RIGHT
             })
-            setCommonLoader(true)
+            setCommonLoader(false)
+
+            Cookies.set('token', res?.data.token)
+            localStorage.setItem('user', JSON.stringify(res?.data?.user))
+
+            setIsAuth(true)
+            setUser(res?.data?.user)
+            
+            setFormData(initForm)
         } else {
             toast.error(res.message, {
                 position: toast.POSITION.TOP_RIGHT
             })
             setCommonLoader(false)
+
+            setIsAuth(false)
             setFormData(initForm)
         }
             
     }
+
+    useEffect(() => {
+        if(isAuth)
+            router.push('/')
+    }, [isAuth])
 
     return (
         <>
@@ -82,7 +103,15 @@ export default function Login() {
                                         disabled={!isValid()}
                                         onClick={handleLogin}
                                     >
-                                        Login
+                                        {
+                                            commonLoader ? 
+                                            <ComponentLevelLoader 
+                                                text={'Registering'}
+                                                color={'#fff'}
+                                                loading={commonLoader}
+
+                                            /> : 'Login'
+                                        }
                                     </button>
                                     <div className="flex flex-col gap-2">
                                         <p>New to website ?</p>
