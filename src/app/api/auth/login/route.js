@@ -48,7 +48,7 @@ export async function POST(req) {
 
         const res = {
             token,
-            use: {
+            user: {
                 email: findUser?.email,
                 name: findUser?.name,
                 _id: findUser?._id,
