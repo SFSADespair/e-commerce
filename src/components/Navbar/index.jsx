@@ -5,17 +5,15 @@ import { adminNavOptions, navOptions } from "@/utils"
 import { Fragment, useContext, useState } from "react"
 import CommonModal from "../CommonModal"
 import Cookies from "js-cookie"
-import Router from "next/router"
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 
-const isAdminView = false
 
 
 const styles = {
     button: 'mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white rounded-3xl',
 }
 
-function NavItems({ isModalView = false }) {
+function NavItems({ isModalView = false, isAdminView, router }) {
     return (
         <div className={`items-center justify-between w-full md:flex md:w-auto ${isModalView ? "" : 'hidden'}`} id='nav-items'>
             <ul className={`flex flex-col p-4 md:p-0 mt-4 font-medium rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 bg-white ${
@@ -27,6 +25,7 @@ function NavItems({ isModalView = false }) {
                         <li 
                             className='cursor-pointer block py-2 pl-3 pr-4 text-gray-900 rounded md:p-0' 
                             key={item.id}
+                            onClick={() => router.push(item.path)}
                         >
                             {item.label}
                         </li>
@@ -34,6 +33,7 @@ function NavItems({ isModalView = false }) {
                         <li 
                             className='cursor-pointer block py-2 pl-3 pr-4 text-gray-900 rounded md:p-0' 
                             key={item.id}
+                            onClick={() => router.push(item.path)}
                         >
                             {item.label}
                         </li>
@@ -47,7 +47,11 @@ function NavItems({ isModalView = false }) {
 export default function Navbar() {
     const {showNavModal, setShowNavModal} = useContext(GlobalContext)
     const {user, isAuth, setIsAuth, setUser}  = useContext(GlobalContext)
+
+    const pathName = usePathname()
     const router = useRouter()
+
+    console.log(pathName);
 
     const handleLogout = () => {
         setIsAuth(false)
@@ -57,12 +61,19 @@ export default function Navbar() {
         router.push('/')
     }
 
+    const isAdminView = pathName.includes('/admin-view')
+
     return (
         <>
             <nav className='bg-white fixed w-full z-20 top-0 left-0 border-b border-gray-200'>
                 <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                    <div className="flex items-center cursor-pointer">
-                        <span className="slef-center text-2xl font-semibold whitespace-nowrap">Ecommerce</span>
+                    <div
+                        onClick={() => router.push('/')} 
+                        className="flex items-center cursor-pointer"
+                    >
+                        <span className="slef-center text-2xl font-semibold whitespace-nowrap">
+                            Ecommerce
+                        </span>
                     </div>
                     <div className="flex md:order-2 gap-2">
                         {
@@ -77,9 +88,19 @@ export default function Navbar() {
                         {
                             user?.role == 'admin' ? (
                                 isAdminView ? (
-                                    <button className={styles.button}>Client View</button>
+                                    <button 
+                                        className={styles.button}
+                                        onClick={() => router.push('/')}
+                                    >
+                                        Client View
+                                    </button>
                                 ) : (
-                                    <button className={styles.button}>Admin View</button>
+                                    <button 
+                                        onClick={() => router.push('/admin-view')}
+                                        className={styles.button}
+                                    >
+                                        Admin View
+                                    </button>
                                 )
                             )  : null
                         }
@@ -125,12 +146,12 @@ export default function Navbar() {
                             </svg>
                         </button>
                     </div>
-                    <NavItems />
+                    <NavItems isAdminView={isAdminView} router={router} />
                 </div>
             </nav>
             <CommonModal 
                 showModalTitle={false}
-                mainContent={<NavItems isModalView={true} />}
+                mainContent={<NavItems isModalView={true} router={router} isAdminView={isAdminView} />}
                 show={showNavModal} setShow={setShowNavModal} 
             />
         </>

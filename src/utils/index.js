@@ -96,3 +96,94 @@ export const loginFromControls = [
         componnentType: 'input'
     }
 ]
+
+export const adminAddPorductFormControls = [
+    {
+        id: 'name',
+        type: 'text',
+        placeholder: 'Product Name',
+        label: 'Name',
+        componnentType: 'input'
+    },
+    {
+        id: 'price',
+        type: 'number',
+        placeholder: 'Product price',
+        label: 'Price',
+        componnentType: 'input'
+    },
+    {
+        id: 'description',
+        type: 'text',
+        placeholder: 'Product Description',
+        label: 'Description',
+        componnentType: 'input'
+    },
+    {
+        id: 'category',
+        type: '',
+        placeholder: '',
+        label: 'Category',
+        componnentType: 'select',
+        options: [
+            {
+                id: 'men',
+                label: 'Men'
+            },
+            {
+                id: 'women',
+                label: 'Women'
+            },
+            {
+                id: 'kids',
+                label: 'Kids'
+            }
+        ]
+    },
+    {
+        id: 'deliveryInfo',
+        type: 'text',
+        placeholder: 'Enter delivery info',
+        label: 'Delivery Info',
+        componnentType: 'input'
+    },
+    {
+        id: 'onSale',
+        type: '',
+        placeholder: '',
+        label: 'On Sale',
+        componnentType: 'select',
+        options: [
+            {
+                id: 'yes',
+                label: 'Yes'
+            },
+            {
+                id: 'no',
+                label: 'No'
+            }
+        ]
+    },
+    {
+        id: 'priceDrop',
+        type: 'number',
+        placeholder: 'Enter Price Drop',
+        label: 'Price Drop',
+        componnentType: 'input'
+    },
+]
+
+export const availableSizes = [
+    {
+        id: 's',
+        label: 'S'
+    },
+    {
+        id: 'm',
+        label: 'M'
+    },
+    {
+        id: 'l',
+        label: 'L'
+    }
+]
