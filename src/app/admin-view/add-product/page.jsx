@@ -3,12 +3,12 @@
 import InputComponent from "@/components/FormElements/InputComponent"
 import SelectComponent from "@/components/FormElements/SelectComponent"
 import TileComponent from "@/components/FormElements/TileComponent"
+import { helperUploadImage } from "@/firebase"
 import { adminAddPorductFormControls, availableSizes } from "@/utils"
 
-
 export default function AdminAddNewProduct() {  
-    const handleImage = () => {
-
+    const handleImage = async(e) => {
+        const imageUrl = await helperUploadImage(e.target.files[0])
     }
 
     const styles = {
@@ -37,12 +37,14 @@ export default function AdminAddNewProduct() {
                             adminAddPorductFormControls.map(controlItem => 
                                 controlItem.componnentType === 'input' ? (
                                     <InputComponent 
+                                        key={controlItem.id}
                                         type={controlItem.type}
                                         label={controlItem.label}
                                         placeholder={controlItem.placeholder}
                                     />
                                 ) : controlItem.componnentType === 'select' ?  (
                                     <SelectComponent 
+                                        key={controlItem.id}
                                         label={controlItem.label}
                                         options={controlItem.options}
                                     />
