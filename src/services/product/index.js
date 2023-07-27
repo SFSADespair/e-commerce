@@ -12,9 +12,11 @@ export const addNewProduct = async (formData) => {
         })
 
         const data = await res.json()
+        console.log(data)
         return data
     } catch (error) {
-        console.log(error);
+        console.log(error)
+        console.log('Hello There');
     }
 }
 

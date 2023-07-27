@@ -44,22 +44,22 @@ export async function POST(req) {
                 return NextResponse.json({
                     success: true,
                     message: 'Product Added Successfuly'
-                }).status(201)
+                })
             else
                 return NextResponse.json({
                     success: false,
                     message: 'Failed to add the product'
-                }).status(400)
+                })
         } else {
             return NextResponse.json({
                 success: false,
                 message: 'You are not authorized'
-            }).status(401)
+            })
         }
     } catch (err) {
         return NextResponse.json({
             success: false,
             message: 'Something went wrong! Please try again later.'
-        }).status(500)
+        })
     }
 }
