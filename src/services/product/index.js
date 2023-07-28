@@ -20,3 +20,17 @@ export const addNewProduct = async (formData) => {
     }
 }
 
+export const getAllAdminProducts = async() => {
+    const URL = 'http://localhost:3000'
+    try {
+        const res = await fetch(`${URL}/api/admin/all-products`, {
+            method: 'GET',
+            cache: 'no-store'
+        })
+        const data = await res.json()
+
+        return data
+    } catch (err) {
+        console.log(err);      
+    }
+}
