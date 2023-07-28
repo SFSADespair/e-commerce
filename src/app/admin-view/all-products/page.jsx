@@ -1,10 +1,9 @@
-
-
+import CommonListing from "@/components/CommonListing";
 
 export default function AdminAllProducts() {
     return (
         <>
-            <div>Admin View - All products!</div>
+            <CommonListing />
         </>
     )
 }
