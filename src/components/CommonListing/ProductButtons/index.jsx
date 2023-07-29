@@ -1,9 +1,16 @@
 'use client'
 
-import { usePathname } from "next/navigation"
+import ComponentLevelLoader from "@/components/Loader/componentlevel"
+import { GlobalContext } from "@/context"
+import { deleteProduct } from "@/services/product"
+import { usePathname, useRouter } from "next/navigation"
+import { useContext } from "react"
+import { toast } from "react-toastify"
 
 export default function ProductButtons({item}) {
     const pathName = usePathname()
+    const router = useRouter()
+    const { setCurrentUProduct, componentLevelLoader, setComponentLevelLoader } = useContext(GlobalContext)
     
     const isAdminView = pathName.includes('admin-view')
     const styles = {
@@ -13,10 +20,48 @@ export default function ProductButtons({item}) {
                  uppercase tracking-wide text-black rounded-full`
     }
 
+    const handleDelete = async (itm) => {
+        const res = await deleteProduct(itm._id)
+        setComponentLevelLoader({loading: true, id: itm._id})
+        if(res.success) {
+            setComponentLevelLoader({loading: false, id: ''})
+            toast.success(res.message, {
+                position: toast.POSITION.TOP_RIGHT
+            })
+            router.refresh() 
+        } else {
+            setComponentLevelLoader({loading: false, id: ''})
+            toast.error(res.message, {
+                position: toast.POSITION.TOP_RIGHT
+            })
+        }
+    }
+
     return isAdminView ? (
         <>
-            <button className={styles.button}>Update</button>
-            <button className={styles.delete}>Delete</button>
+            <button
+                onClick={()=> {
+                    setCurrentUProduct(item)
+                    router.push('/admin-view/add-product')
+                }} 
+                className={styles.button}
+            >
+                Update
+            </button>
+            <button 
+                onClick={() => handleDelete(item)}
+                className={styles.delete}
+            >
+                {
+                    componentLevelLoader && 
+                    componentLevelLoader.loading && 
+                    item._id === componentLevelLoader.id ? 
+                    <ComponentLevelLoader 
+                        color={'#fff'}
+                        loading={componentLevelLoader && componentLevelLoader.loading}
+                    /> : 'Delete'
+                }
+            </button>
         </>
     ) : (
         <>

@@ -7,10 +7,10 @@ import ComponentLevelLoader from "@/components/Loader/componentlevel"
 import Notification from "@/components/Notification"
 import { GlobalContext } from "@/context"
 import { helperUploadImage } from "@/firebase"
-import { addNewProduct } from "@/services/product"
+import { addNewProduct, updateProduct } from "@/services/product"
 import { adminAddPorductFormControls, availableSizes } from "@/utils"
 import { useRouter } from "next/navigation"
-import { useContext, useState } from "react"
+import { useContext, useState, useEffect } from "react"
 import { toast } from "react-toastify"
 
 const initForm = {
@@ -27,8 +27,16 @@ const initForm = {
 
 export default function AdminAddNewProduct() {  
     const [formData, setFormData] = useState(initForm)
-    const  { componentLevelLoader, setComponentLevelLoader } = useContext(GlobalContext)
+    const  { 
+        componentLevelLoader, setComponentLevelLoader,
+        currentUProduct, setCurrentUProduct
+    } = useContext(GlobalContext)
     const router = useRouter()
+
+    useEffect(() => {
+        if (currentUProduct !== null)
+            setFormData(currentUProduct)
+    }, [currentUProduct])
 
     const handleImage = async(e) => {
         const imgUrl = await helperUploadImage(e.target.files[0])
@@ -58,10 +66,13 @@ export default function AdminAddNewProduct() {
 
     const handleProduct = async () => {
         setComponentLevelLoader({loading: true, id: ''})
-        const res = await addNewProduct(formData)
+        const res = currentUProduct !== null 
+            ? await updateProduct(formData) 
+            : await addNewProduct(formData)
 
         if(res.success) {
             setComponentLevelLoader({loading: false, id: ''})
+            setCurrentUProduct(null)
             toast.success(res.message, {
                 position: toast.POSITION.TOP_RIGHT
             })
@@ -146,7 +157,11 @@ export default function AdminAddNewProduct() {
                                 <ComponentLevelLoader 
                                     color={'#fff'}
                                     loading={componentLevelLoader && componentLevelLoader.loading}
-                                /> : 'Add Product'
+                                /> : (
+                                    currentUProduct !== null 
+                                        ? 'Update' 
+                                        : 'Add Product'
+                                )
                             }
                         </button>
                     </div>

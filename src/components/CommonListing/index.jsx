@@ -1,9 +1,18 @@
 'use client'
 
+import { useRouter } from "next/navigation"
 import ProductButtons from "./ProductButtons"
 import ProductTile from "./ProductTile"
+import { useEffect } from "react"
+import Notification from "../Notification"
 
 export default function CommonListing({data}) {
+    const router = useRouter()
+
+    useEffect(() => {
+        router.refresh()
+    }, [])
+
     return (
         <section className="bg-white rounded-lg mt-6 ml-8 mr-8 sm:py-16">
             <div className="mx-8 my-24 px-4 sm:px-6">
@@ -26,6 +35,7 @@ export default function CommonListing({data}) {
                     }
                 </div>
             </div>
+            <Notification />
         </section>
     )
 }
