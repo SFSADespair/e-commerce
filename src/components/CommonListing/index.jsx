@@ -6,7 +6,7 @@ import ProductTile from "./ProductTile"
 import { useEffect } from "react"
 import Notification from "../Notification"
 
-export default function CommonListing({data}) {
+export default function CommonListing({ data }) {
     const router = useRouter()
 
     useEffect(() => {
@@ -31,7 +31,9 @@ export default function CommonListing({data}) {
                                     <ProductButtons item={item} />
                                 </article> 
                             </>
-                        )) : null
+                        )) : (
+                            <h1 className="flex text-xl font-bold">No Data Found</h1>
+                        )
                     }
                 </div>
             </div>

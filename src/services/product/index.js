@@ -20,7 +20,7 @@ export const addNewProduct = async (formData) => {
     }
 }
 
-export const getAllAdminProducts = async() => {
+export const getAllProducts = async() => {
     
     try {
         const res = await fetch(`${URL}/api/admin/all-products`, {
@@ -39,6 +39,7 @@ export const updateProduct = async(formData) => {
     try {
         const res = await fetch('/api/admin/update', {
             method: 'PUT',
+            cache: 'no-store',
             headers: {
                 'content-type': 'application/json',
                 Authorization: `Bearer ${Cookies.get('token')}`
@@ -59,12 +60,27 @@ export const deleteProduct = async(id) => {
     try {
         const res = await fetch(`/api/admin/delete?id=${id}`, {
             method: 'DELETE',
+            cache: 'no-store',
             headers: {
                 Authorization: `Bearer ${Cookies.get('token')}`
             }
         })
 
         const data = await res.json()
+
+        return data
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export const categoryProduct = async(id) => {
+    try {
+        const res = await fetch(`${URL}/api/client/category?id=${id}`, {
+            method: 'GET',
+            cache: 'no-store'
+        })
+        const data = res.json()
 
         return data
     } catch (err) {
