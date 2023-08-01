@@ -80,7 +80,21 @@ export const categoryProduct = async(id) => {
             method: 'GET',
             cache: 'no-store'
         })
-        const data = res.json()
+        const data = await res.json()
+
+        return data
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export const getProduct = async(id) => {
+    try {
+        const res = await fetch(`${URL}/api/client/product-id?id=${id}`, {
+            method: 'GET',
+            cache: 'no-store'
+        })
+        const data = await res.json()
 
         return data
     } catch (err) {
