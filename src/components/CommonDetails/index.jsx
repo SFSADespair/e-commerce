@@ -56,8 +56,7 @@ export default function CommonDetails({item}) {
                             <h1 className="text-2xl font-bold text-gray-900 ">
                                 {item && item.name}
                             </h1>
-                        </div>
-                        <div className="mt-10 flex flex-row items-center justify-between space-y-4 border-t border-b py-4 sm:flex-row sm:space-y-0">
+                            <div className="mt-10 flex flex-row items-center justify-between space-y-4 border-t border-b py-4 sm:flex-row sm:space-y-0">
                             <div className="flex items-end">
                                 <h1 className="text-3xl font-bold">${item && item.price}</h1>
                             </div>
@@ -72,17 +71,19 @@ export default function CommonDetails({item}) {
                                 <li className="flex items-center text-left text-sm font-medium text-gray-600">Cancel Any Time</li>
                         </ul>
                         <div className="lg:col-span-3">
-                                <div className="border-b border-gray-400">
-                                    <nav className="flex gap-4">
-                                        <a href="#" className="border-b-2 border-gray-900 py-4 text-sm font-medium text-gray-900">
-                                            Description
-                                        </a>
-                                    </nav>
-                                </div>
-                                <div className="mt-8 flow-root sm:mt-12">
-                                    {item && item.description}
-                                </div>
+                            <div className="border-b border-gray-400">
+                                <nav className="flex gap-4">
+                                    <a href="#" className="border-b-2 border-gray-900 py-4 text-sm font-medium text-gray-900">
+                                        Description
+                                    </a>
+                                </nav>
                             </div>
+                            <div className="mt-8 flow-root sm:mt-12">
+                                {item && item.description}
+                            </div>
+                        </div>
+                        </div>
+
                     </div>
                 </div>
             </section>
