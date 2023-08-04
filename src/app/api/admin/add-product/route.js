@@ -1,5 +1,6 @@
 import connectDB from "@/DB"
 import Product from "@/Models/product";
+import AuthUser from "@/middleware/AuthUser";
 import Joi from "joi";
 import { NextResponse } from "next/server";
 
@@ -23,8 +24,9 @@ export async function POST(req) {
     try {
         await connectDB()
 
-        const user = 'admin'
-        if(user === 'admin') {
+        const isAuth = await AuthUser(req)
+
+        if(isAuth?.role === 'admin') {
             const data = await req.json()
             const { 
                 name, price, description, imageUrl, category, sizes, onSale, deliveryInfo, priceDrop 
