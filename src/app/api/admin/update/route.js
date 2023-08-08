@@ -9,8 +9,8 @@ export const dynamic = 'force-dynamic'
 export const PUT = async (req) => {
     try {
         await connectDB()
-
-        const isAuth = AuthUser(req)
+        
+        const isAuth = (await AuthUser(req)).valueOf()
 
         if (isAuth?.role === 'admin') {
             const data = await req.json()

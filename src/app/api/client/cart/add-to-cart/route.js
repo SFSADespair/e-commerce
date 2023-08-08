@@ -14,7 +14,7 @@ const AddToCart = Joi.object({
 export const POST = async(req) => {
     try {
         await connectDB()
-        const isAuth = await AuthUser(req)
+         const isAuth = (await AuthUser(req)).valueOf()
         
         if (isAuth) {
             const data = await req.json()

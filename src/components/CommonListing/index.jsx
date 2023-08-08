@@ -24,7 +24,6 @@ export default function CommonListing({ data }) {
                                 <article 
                                     key={i}
                                     className="relative flex flex-col overflow-hidden border cursor-pointer rounded-lg"
-                                    onClick={() => router.push(`/product/${item._id}`)}
                                 >
                                     <ProductTile 
                                         item={item}

@@ -19,12 +19,11 @@ const AddNewProductSchema = Joi.object({
 
 export const dynamic = 'dorce-dynamic'
 
-
 export async function POST(req) {
     try {
         await connectDB()
-
-        const isAuth = await AuthUser(req)
+        
+        const isAuth = (await AuthUser(req)).valueOf()
 
         if(isAuth?.role === 'admin') {
             const data = await req.json()
