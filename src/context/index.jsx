@@ -13,6 +13,7 @@ export default function GlobalState({children}) {
     const [user, setUser] = useState(null)
     const [currentUProduct, setCurrentUProduct] = useState(null)
     const [showCartModel, setShowCartModel] = useState(false)
+    const [cartItems, setCartItems] = useState([])
 
     useEffect(() => {
         if(Cookies.get('token') !== undefined) {
@@ -33,7 +34,8 @@ export default function GlobalState({children}) {
                 user, setUser, 
                 componentLevelLoader, setComponentLevelLoader,
                 currentUProduct, setCurrentUProduct,
-                showCartModel, setShowCartModel
+                showCartModel, setShowCartModel,
+                cartItems, setCartItems
             }}>
                 {children}
             </GlobalContext.Provider>

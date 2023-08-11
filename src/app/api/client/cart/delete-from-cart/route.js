@@ -10,7 +10,7 @@ export const DELETE = async(req) => {
         connectDB()
 
         const isAuth = (await AuthUser(req)).valueOf()
-        if (isAuth?.role) {
+        if (isAuth) {
             const { searchParams } = new URL(req.url)
             const id = searchParams.get('id')
             if(!id)

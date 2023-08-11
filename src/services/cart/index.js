@@ -38,7 +38,7 @@ export const getCartItems = async(id) => {
 
 export const deleteCartItem = async(id) => {
     try {
-        const res = await fetch(`/api/client/cart/delete-from-cart/?id=${id}`, {
+        const res = await fetch(`/api/client/cart/delete-from-cart?id=${id}`, {
             method: 'DELETE',
             cache: 'no-store',
             headers: {
