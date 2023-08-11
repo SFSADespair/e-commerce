@@ -1,5 +1,7 @@
 import Cookies from "js-cookie"
 
+const URL = 'http://localhost:3000'
+
 export const addToCart = async(formData) => {
     try {
         const res = await fetch('/api/client/cart/add-to-cart', {
@@ -20,9 +22,8 @@ export const addToCart = async(formData) => {
 
 export const getCartItems = async(id) => {
     try {
-        const res = await fetch(`api/client/cart/cart-items/?id=${id}`, {
+        const res = await fetch(`${URL}/api/client/cart/cart-items?id=${id}`, {
             method: 'GET',
-            cache: 'no-store',
             headers: {
                 Authorization: `Bearer ${Cookies.get('token')}`
             }

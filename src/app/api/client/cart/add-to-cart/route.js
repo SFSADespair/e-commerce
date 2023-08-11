@@ -29,6 +29,7 @@ export const POST = async(req) => {
 
 
             const isCartItemExist = await Cart.exists({ userID: userID, productID: productID })
+            console.log(isCartItemExist);
             if (isCartItemExist)
                 return NextResponse.json({
                     success: false,
