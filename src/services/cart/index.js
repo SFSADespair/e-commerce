@@ -4,7 +4,6 @@ export const addToCart = async(formData) => {
     try {
         const res = await fetch('/api/client/cart/add-to-cart', {
             method: 'POST',
-            cache: 'no-store',
             headers: {
                 'content-type': 'application/json',
                 Authorization: `Bearer ${Cookies.get('token')}`

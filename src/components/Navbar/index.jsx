@@ -6,6 +6,7 @@ import { Fragment, useContext, useEffect } from "react"
 import CommonModal from "../CommonModal"
 import Cookies from "js-cookie"
 import { useRouter, usePathname } from "next/navigation"
+import CartModal from "../CartModal"
 
 const styles = {
     button: 'mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white rounded-3xl',
@@ -47,7 +48,8 @@ export default function Navbar() {
     const {
         user, isAuth, 
         setIsAuth, setUser,
-        currentUProduct, setCurrentUProduct
+        currentUProduct, setCurrentUProduct,
+        showCartModel
     }  = useContext(GlobalContext)
 
     const pathName = usePathname()
@@ -160,6 +162,10 @@ export default function Navbar() {
                 mainContent={<NavItems isModalView={true} router={router} isAdminView={isAdminView} />}
                 show={showNavModal} setShow={setShowNavModal} 
             />
+            {
+                showCartModel &&
+                <CartModal />
+            }
         </>
     )
 }

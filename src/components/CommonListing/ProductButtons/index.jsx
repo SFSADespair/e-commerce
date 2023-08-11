@@ -2,6 +2,7 @@
 
 import ComponentLevelLoader from "@/components/Loader/componentlevel"
 import { GlobalContext } from "@/context"
+import { addToCart } from "@/services/cart"
 import { deleteProduct } from "@/services/product"
 import { usePathname, useRouter } from "next/navigation"
 import { useContext } from "react"
@@ -10,7 +11,12 @@ import { toast } from "react-toastify"
 export default function ProductButtons({item}) {
     const pathName = usePathname()
     const router = useRouter()
-    const { setCurrentUProduct, componentLevelLoader, setComponentLevelLoader } = useContext(GlobalContext)
+    const { 
+        setCurrentUProduct, 
+        componentLevelLoader, setComponentLevelLoader, 
+        user,
+        showCartModel, setShowCartModel
+    } = useContext(GlobalContext)
     
     const isAdminView = pathName.includes('admin-view')
     const styles = {
@@ -21,8 +27,9 @@ export default function ProductButtons({item}) {
     }
 
     const handleDelete = async (itm) => {
-        const res = await deleteProduct(itm._id)
         setComponentLevelLoader({loading: true, id: itm._id})
+
+        const res = await deleteProduct(itm._id)
         if(res.success) {
             setComponentLevelLoader({loading: false, id: ''})
             toast.success(res.message, {
@@ -34,6 +41,30 @@ export default function ProductButtons({item}) {
             toast.error(res.message, {
                 position: toast.POSITION.TOP_RIGHT
             })
+        }
+    }
+
+    const handleAddCart = async(itm) => {
+        setComponentLevelLoader({loading: true, id: itm._id})
+
+        const res = await addToCart({
+            userID: user._id,
+            productID: itm._id
+        })
+        if (res.success) {
+            setComponentLevelLoader({loading: false, id: ''})
+            toast.success(res.message, {
+                position: toast.POSITION.TOP_RIGHT
+            })
+            setShowCartModel(true)
+            console.log(showCartModel);
+        } else {
+            setComponentLevelLoader({loading: false, id: ''})
+            toast.error(res.message, {
+                position: toast.POSITION.TOP_RIGHT
+            })
+            setShowCartModel(true)
+            console.log(showCartModel);
         }
     }
 
@@ -65,7 +96,20 @@ export default function ProductButtons({item}) {
         </>
     ) : (
         <>
-            <button className={styles.button}>Add To Cart</button>
+            <button
+                onClick={() => handleAddCart(item)} 
+                className={styles.button}
+            >
+                {
+                    componentLevelLoader && 
+                    componentLevelLoader.loading && 
+                    item._id === componentLevelLoader.id ? 
+                    <ComponentLevelLoader 
+                        color={'#fff'}
+                        loading={componentLevelLoader && componentLevelLoader.loading}
+                    /> : 'Add To Cart'
+                }
+            </button>
         </>
     )
 }
