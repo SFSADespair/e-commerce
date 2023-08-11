@@ -14,9 +14,9 @@ const AddToCart = Joi.object({
 export const POST = async(req) => {
     try {
         await connectDB()
-         const isAuth = (await AuthUser(req)).valueOf()
-        
-        if (isAuth) {
+        const isAuth = (await AuthUser(req)).valueOf()
+
+        if (isAuth?.role) {
             const data = await req.json()
             const { productID, userID } = data
 
@@ -27,19 +27,16 @@ export const POST = async(req) => {
                     message: error.details[0].message
                 })
 
-            const isCartItemExist = await Cart.find({
-                productID: productID,
-                userID: userID
-            })
 
+            const isCartItemExist = await Cart.exists({ userID: userID, productID: productID })
             if (isCartItemExist)
                 return NextResponse.json({
                     success: false,
-                    message: 'Product is already in cart.'
+                    message: 'Cart item already exists!'
                 })
-            
+
             const saveProductToCart = await Cart.create(data)
-            
+                
             if (saveProductToCart)
                 return NextResponse.json({
                     success: true,
@@ -50,7 +47,8 @@ export const POST = async(req) => {
                     success: false,
                     message: 'Failed to add product to cart.'
                 })
-        } else 
+            
+        } else
             return NextResponse.json({
                 success: false,
                 message: 'You are not authorised'
