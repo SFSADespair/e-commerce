@@ -7,7 +7,7 @@ export const GlobalContext = createContext(null);
 
 export default function GlobalState({children}) {
     const [showNavModal, setShowNavModal] = useState(false)
-    const [pageLevelLoader, setpageLevelLoader] = useState(false)
+    const [pageLevelLoader, setpageLevelLoader] = useState(true)
     const [componentLevelLoader, setComponentLevelLoader] = useState({loading: false, id: ''})
     const [isAuth, setIsAuth] = useState(false)
     const [user, setUser] = useState(null)

@@ -49,7 +49,7 @@ export default function Navbar() {
         user, isAuth, 
         setIsAuth, setUser,
         currentUProduct, setCurrentUProduct,
-        showCartModel
+        showCartModel, setShowCartModel
     }  = useContext(GlobalContext)
 
     const pathName = usePathname()
@@ -88,7 +88,7 @@ export default function Navbar() {
                             !isAdminView && isAuth ? (
                                 <Fragment>
                                     <button className={styles.button}>Account</button>
-                                    <button className={styles.button}>Cart</button>
+                                    <button className={styles.button} onClick={() => setShowCartModel(true)}>Cart</button>
                                 </Fragment>
                             ) : null
                         }

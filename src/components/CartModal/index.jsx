@@ -7,6 +7,7 @@ import { deleteCartItem, getCartItems } from "@/services/cart";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import ComponentLevelLoader from "../Loader/componentlevel";
+import { useRouter } from "next/navigation";
 
 const styles = {
     cart: 'mt-1.5 w-full inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white rounded-3xl',
@@ -104,7 +105,6 @@ export default function CartModal() {
             setCartItems(res.data)
             localStorage.setItem('cartItems', JSON.stringify(res.data))
         }
-        console.log(res);
     }
 
     useEffect(() => {
@@ -112,6 +112,7 @@ export default function CartModal() {
             getCart()
     }, [user])
 
+    const router = useRouter()
 
     return (
         <>
@@ -128,6 +129,10 @@ export default function CartModal() {
                         <button 
                             type='button' 
                             className={styles.cart}
+                            onClick={() => {
+                                router.push('/cart')
+                                setShowCartModel(false)
+                            }}
                         >
                             Go to cart
                         </button>
