@@ -14,6 +14,14 @@ export default function GlobalState({children}) {
     const [currentUProduct, setCurrentUProduct] = useState(null)
     const [showCartModel, setShowCartModel] = useState(false)
     const [cartItems, setCartItems] = useState([])
+    const [addressList, setAddressList] = useState([])
+    const [addressFormData, setAddressFormData] = useState({
+        fullName: '',
+        address: '',
+        city: '',
+        country: '',
+        postalCode: ''
+    })
 
     useEffect(() => {
         if(Cookies.get('token') !== undefined) {
@@ -35,7 +43,9 @@ export default function GlobalState({children}) {
                 componentLevelLoader, setComponentLevelLoader,
                 currentUProduct, setCurrentUProduct,
                 showCartModel, setShowCartModel,
-                cartItems, setCartItems
+                cartItems, setCartItems,
+                addressList, setAddressList,
+                addressFormData, setAddressFormData
             }}>
                 {children}
             </GlobalContext.Provider>

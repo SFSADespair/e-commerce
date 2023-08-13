@@ -199,3 +199,41 @@ export const firebaseConfig = {
 }
 
 export const firebaseStorageUrl = process.env.storageUrl
+
+export const addNewAddressFormControls = [
+    {
+        id: 'fullName',
+        type: 'input',
+        placeholder: 'Enter Name for this address',
+        label: 'Address Name',
+        componnentType: 'input'
+    },
+    {
+        id: 'Address',
+        type: 'input',
+        placeholder: 'Enter your address here',
+        label: 'Address',
+        componnentType: 'input'
+    },
+    {
+        id: 'city',
+        type: 'input',
+        placeholder: 'City Name',
+        label: 'City',
+        componnentType: 'input'
+    },
+    {
+        id: 'country',
+        type: 'input',
+        placeholder: 'Country name',
+        label: 'Country',
+        componnentType: 'input'
+    },
+    {
+        id: 'postalCode',
+        type: 'input',
+        placeholder: 'Enter your postal code here',
+        label: 'Postal Code',
+        componnentType: 'input'
+    }
+]

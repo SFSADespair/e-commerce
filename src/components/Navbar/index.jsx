@@ -87,7 +87,7 @@ export default function Navbar() {
                         {
                             !isAdminView && isAuth ? (
                                 <Fragment>
-                                    <button className={styles.button}>Account</button>
+                                    <button className={styles.button} onClick={() => router.push('/account')}>Account</button>
                                     <button className={styles.button} onClick={() => setShowCartModel(true)}>Cart</button>
                                 </Fragment>
                             ) : null
