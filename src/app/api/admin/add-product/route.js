@@ -17,7 +17,7 @@ const AddNewProductSchema = Joi.object({
     
 })
 
-export const dynamic = 'dorce-dynamic'
+export const dynamic = 'force-dynamic'
 
 export async function POST(req) {
     try {

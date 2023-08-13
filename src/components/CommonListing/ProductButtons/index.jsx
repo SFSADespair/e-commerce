@@ -57,14 +57,12 @@ export default function ProductButtons({item}) {
                 position: toast.POSITION.TOP_RIGHT
             })
             setShowCartModel(true)
-            console.log(showCartModel);
         } else {
             setComponentLevelLoader({loading: false, id: ''})
             toast.error(res.message, {
                 position: toast.POSITION.TOP_RIGHT
             })
             setShowCartModel(true)
-            console.log(showCartModel);
         }
     }
 
