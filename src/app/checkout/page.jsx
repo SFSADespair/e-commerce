@@ -61,8 +61,6 @@ export default function Checkout() {
         })
     }
 
-    console.log(checkoutFormData);
-
     return (
         <div className="mt-10 grid sm:px-10 lg:grid-cols-2 lg:px-20 xl:px-32 mb-10">
             <div className="px-4 pt-8">
