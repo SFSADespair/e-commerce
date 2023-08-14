@@ -3,6 +3,8 @@
 import PageLevelLoader from "@/components/Loader/pagelevel"
 import { GlobalContext } from "@/context"
 import { getAddressList } from "@/services/address"
+import { callStripeSession } from "@/services/stripe"
+import { loadStripe } from "@stripe/stripe-js"
 import { useRouter } from "next/navigation"
 import { useContext, useEffect, useState } from "react"
 
@@ -21,8 +23,12 @@ export default function Checkout() {
         checkoutFormData, setCheckoutFormData
     } = useContext(GlobalContext)
     const [selected, setSelected] = useState(null)
+    const [isProcessing, setIsProcessing] = useState(false)
 
     const router = useRouter()
+
+    const publishableKey = 'pk_test_51NThfGIyN98lbcOOhowi5SvkMp4G0bOZgnIA4HfrLcufnfrI6b2OpIklCX7NMDs6cVCRYuXnk8pbv6KmnMHs0QoU00wLoygcrh'
+    const stripePromise = loadStripe(publishableKey)
 
     const getAddresses = async() => {
         setpageLevelLoader(true)
@@ -59,6 +65,33 @@ export default function Checkout() {
                 postalCode: getAddress.postalCode
             }
         })
+    }
+
+    const handlePayment = async() => {
+        const stripe = await stripePromise
+
+        const createLineItems = cartItems.map(item => ({
+            price_data: {
+                currency: 'zar',
+                product_data: {
+                    images: [item.productID.imageUrl],
+                    name: item.productID.name
+                },
+                unit_amount: item.productID.price * 100
+            },
+            quantity: 1
+        }))
+
+        const res = await callStripeSession(createLineItems)
+        setIsProcessing(true)
+        localStorage.setItem('stripe', true)
+        localStorage.setItem('checkoutFormData', JSON.stringify(checkoutFormData))
+
+        const {error} = await stripe.redirectToCheckout({
+            sessionId: res.id
+        })
+
+        console.log(error);
     }
 
     return (
@@ -148,6 +181,7 @@ export default function Checkout() {
                 <button 
                     disabled={(cartItems && cartItems.length === 0 || Object.keys(checkoutFormData.shipping).length === 0)} 
                     type='button' className={styles.checkout}
+                    onClick={handlePayment}
                 >
                     Checkout
                 </button>
