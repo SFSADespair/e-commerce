@@ -6,7 +6,7 @@ import { NextResponse } from "next/server"
 
 export const dynamic = 'force-dynamic'
 
-export const UPDATE = async(req) => {
+export const PUT = async(req) => {
     try {
         await connectDB()
 

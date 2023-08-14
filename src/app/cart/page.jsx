@@ -1,6 +1,7 @@
 'use client'
 
 import CommonCart from "@/components/CommonCart"
+import PageLevelLoader from "@/components/Loader/pagelevel"
 import { GlobalContext } from "@/context"
 import { deleteCartItem, getCartItems } from "@/services/cart"
 import { useContext, useEffect } from "react"
@@ -51,11 +52,10 @@ export default function Cart() {
     if (pageLevelLoader) {
         return (
             <div className="w-full min-h-screen flex justify-center items-center">
-                <PulseLoader 
+                <PageLevelLoader 
                     color={'#000000'}
                     loading={pageLevelLoader}
                     size={30}
-                    data-testid="loader"
                 />
             </div>
         )

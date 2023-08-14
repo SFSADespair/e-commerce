@@ -49,7 +49,7 @@ export const updateAddress = async(formData) => {
             body: JSON.stringify(formData)
         })
 
-        const data = res.json()
+        const data = await res.json()
         return data
     } catch (e) {
         console.log(e)
@@ -60,13 +60,12 @@ export const deleteAddress = async(id) => {
     try {
         const res = await fetch(`/api/address/delete-address?id=${id}`, {
             method: 'DELETE',
-            cache: 'no-store',
             headers: {
                 Authorization: `Bearer ${Cookies.get('token')}`
             }
         })
 
-        const data = res.json()
+        const data = await res.json()
         return data
     } catch (e) {
         console.log(e)

@@ -209,7 +209,7 @@ export const addNewAddressFormControls = [
         componnentType: 'input'
     },
     {
-        id: 'Address',
+        id: 'address',
         type: 'input',
         placeholder: 'Enter your address here',
         label: 'Address',
