@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import ComponentLevelLoader from "../Loader/componentlevel"
+import { useRouter } from "next/navigation"
 
 const styles = {
     remove: `font-medium text-yellow-700 sm:order-2`,
@@ -12,6 +13,7 @@ const styles = {
 
 
 export default function CommonCart({ cartItems, handleRemove, componentLevelLoader }) {
+    const router = useRouter()
     return (
         <section className="mb-8">
             <div className="mx-auto px-4 sm:px-6 lg:px-8">
@@ -105,6 +107,7 @@ export default function CommonCart({ cartItems, handleRemove, componentLevelLoad
                                         disabled={cartItems && cartItems.length === 0} 
                                         type='button' 
                                         className={styles.checkout}
+                                        onClick={() => Router.push('/checkout')}
                                     >
                                         Checkout
                                     </button>

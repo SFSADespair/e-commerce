@@ -140,6 +140,7 @@ export default function CartModal() {
                             disabled={cartItems && cartItems.length === 0}
                             type='button' 
                             className={styles.checkout}
+                            onClick={() => router.push('/checkout')}
                         >
                             Check Out
                         </button>
