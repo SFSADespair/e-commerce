@@ -2,7 +2,7 @@ import Cookies from "js-cookie"
 
 const URL = 'http://localhost:3000'
 
-const createOrder = async(formData) => {
+export const createOrder = async(formData) => {
     try {
         const res = await fetch('/api/order/create', {
             method: 'POST',
@@ -20,7 +20,7 @@ const createOrder = async(formData) => {
     }
 }
 
-const allOrders = async(id) => {
+export const allOrders = async(id) => {
     try {
         const res = await fetch(`/api/order/orders?id=${id}`, {
             method: 'GET',
@@ -37,7 +37,7 @@ const allOrders = async(id) => {
     }
 }
 
-const orderDetails = async(id) => {
+export const orderDetails = async(id) => {
     try {
         const res = await fetch(`/api/order/details?id=${id}`, {
             method: 'GET',

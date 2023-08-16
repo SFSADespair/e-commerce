@@ -5,7 +5,7 @@ import { createContext, useState, useEffect } from "react";
 
 export const GlobalContext = createContext(null);
 export const initCheckoutFormData = {
-    shipping: {},
+    shippingAddress: {},
     paymentMethod: '',
     totalPrice: 0,
     isPaid: false,

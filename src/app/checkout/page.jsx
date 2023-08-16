@@ -1,12 +1,15 @@
 'use client'
 
 import PageLevelLoader from "@/components/Loader/pagelevel"
+import Notification from "@/components/Notification"
 import { GlobalContext } from "@/context"
 import { getAddressList } from "@/services/address"
+import { createOrder } from "@/services/orders"
 import { callStripeSession } from "@/services/stripe"
 import { loadStripe } from "@stripe/stripe-js"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useContext, useEffect, useState } from "react"
+import { toast } from "react-toastify"
 
 const styles = {
     button: 'mt-5 mb-5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide border border-gray-500 text-white rounded-3xl',
@@ -24,8 +27,10 @@ export default function Checkout() {
     } = useContext(GlobalContext)
     const [selected, setSelected] = useState(null)
     const [isProcessing, setIsProcessing] = useState(false)
+    const [orderSuccess, setOrderSuccess] = useState(false)
 
     const router = useRouter()
+    const params = useSearchParams()
 
     const publishableKey = 'pk_test_51NThfGIyN98lbcOOhowi5SvkMp4G0bOZgnIA4HfrLcufnfrI6b2OpIklCX7NMDs6cVCRYuXnk8pbv6KmnMHs0QoU00wLoygcrh'
     const stripePromise = loadStripe(publishableKey)
@@ -44,20 +49,63 @@ export default function Checkout() {
             getAddresses()
     }, [user])
 
+    useEffect(() => {
+        async function createFinalOrder()  {
+            const isStripe = JSON.parse(localStorage.getItem('stripe'))
+            if (isStripe && params.get('status') === 'success' && cartItems && cartItems.length > 0) {
+                setIsProcessing(true)
+                const getCheckoutFormData = JSON.parse(localStorage.getItem('checkoutFormData'))
+
+                const createFinal = {
+                    user: user?._id,
+                    shippingAddress: getCheckoutFormData.shippingAddress,
+                    orderItems: cartItems.map(item => ({
+                        qty: 1,
+                        product: item.productID
+                    })),
+                    paymentMethod: 'stripe',
+                    totalPrice: cartItems && cartItems.length ? (
+                                    cartItems.reduce((total, item) => item.productID.price + total, 0)
+                                ) : (0),
+                    isPaid: true,
+                    isProcessing: true,
+                    paidAt: new Date()
+                }
+                const res = await createOrder(createFinal)
+                if (res.success) {
+                    setIsProcessing(false)
+                    setOrderSuccess(true)
+
+                    toast.success(res.message, {
+                        position: toast.POSITION.TOP_RIGHT
+                    })
+                } else {
+                    setIsProcessing(false)
+                    setOrderSuccess(false)
+                    toast.error(res.message, {
+                        position: toast.POSITION.TOP_RIGHT
+                    })
+                }
+            }
+        }
+
+        createFinalOrder()
+    }, [params.get('status'), cartItems])
+
     const handleSelected = (getAddress) => {
         if (getAddress._id === selected) {
             setSelected(null)
             setCheckoutFormData({
                 ...checkoutFormData,
-                shipping: {}
+                shippingAddress: {}
             })
             return
         }
         setSelected(getAddress._id)
         setCheckoutFormData({
             ...checkoutFormData,
-            shipping: {
-                ...checkoutFormData.shipping,
+            shippingAddress: {
+                ...checkoutFormData.shippingAddress,
                 fullName: getAddress.fullName,
                 address: getAddress.address,
                 city: getAddress.city,
@@ -92,6 +140,39 @@ export default function Checkout() {
         })
 
         console.log(error);
+    }
+
+    if (orderSuccess) {
+        return (
+            <section className="h-screen bg-gray-200">
+                <div className="mx-auto px-4 sm:px-6 lg:px8">
+                    <div className="mx-auto mt-8 max-w-screen-xl px-4 lg:px8">
+                        <div className="bg-white shadow-xl rounded-xl">
+                            <div className="px-4 py-6 sm:px-8 sm:py-10 flex flex-col gap-5">
+                                <h1 className="font-bold text-lg">Your payment is successful</h1>
+                                <button
+                                    type='button' className={styles.checkout}
+                                >
+                                    View Orders
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        )
+    }
+
+    if (isProcessing) {
+        return (
+            <div className="w-full min-h-screen flex justify-center items-center">
+                <PageLevelLoader 
+                    color={'#000000'}
+                    loading={isProcessing}
+                    size={20} 
+                />
+            </div>
+        )
     }
 
     return (
@@ -179,13 +260,14 @@ export default function Checkout() {
                     </div>
                 </div>
                 <button 
-                    disabled={(cartItems && cartItems.length === 0 || Object.keys(checkoutFormData.shipping).length === 0)} 
+                    disabled={(cartItems && cartItems.length === 0 || Object.keys(checkoutFormData.shippingAddress).length === 0)} 
                     type='button' className={styles.checkout}
                     onClick={handlePayment}
                 >
                     Checkout
                 </button>
             </div>
+            <Notification />
         </div>
     )
 }

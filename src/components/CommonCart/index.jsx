@@ -107,7 +107,7 @@ export default function CommonCart({ cartItems, handleRemove, componentLevelLoad
                                         disabled={cartItems && cartItems.length === 0} 
                                         type='button' 
                                         className={styles.checkout}
-                                        onClick={() => Router.push('/checkout')}
+                                        onClick={() => router.push('/checkout')}
                                     >
                                         Checkout
                                     </button>
