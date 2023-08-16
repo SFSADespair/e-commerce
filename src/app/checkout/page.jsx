@@ -142,7 +142,16 @@ export default function Checkout() {
         console.log(error);
     }
 
-    if (orderSuccess) {
+    useEffect(() => {
+        if (orderSuccess) {
+            setTimeout(() => {
+                setOrderSuccess(false)
+                router.push('/orders')
+            }, [2500])
+        }
+    }, [orderSuccess])
+
+    if (cartItems.length === 0) {
         return (
             <section className="h-screen bg-gray-200">
                 <div className="mx-auto px-4 sm:px-6 lg:px8">
@@ -152,6 +161,7 @@ export default function Checkout() {
                                 <h1 className="font-bold text-lg">Your payment is successful</h1>
                                 <button
                                     type='button' className={styles.checkout}
+                                    onClick={() => router.push('/orders')}
                                 >
                                     View Orders
                                 </button>

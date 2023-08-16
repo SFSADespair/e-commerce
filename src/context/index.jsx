@@ -1,6 +1,7 @@
 'use client'
 
 import Cookies from "js-cookie";
+import { usePathname, useRouter } from "next/navigation";
 import { createContext, useState, useEffect } from "react";
 
 export const GlobalContext = createContext(null);
@@ -32,6 +33,25 @@ export default function GlobalState({children}) {
     })
     const [checkoutFormData, setCheckoutFormData] = useState(initCheckoutFormData)
 
+    const protectedRoutes = [
+        '/cart',
+        '/checkout',
+        '/account',
+        '/orders',
+        '/admin-view',
+        '/admin-view/add-products',
+        '/admin-view/all-products'
+    ]
+
+    const protectedAdminRoutes = [
+        '/admin-view',
+        '/admin-view/add-products',
+        '/admin-view/all-products'
+    ]
+
+    const router = useRouter()
+    const pathName = usePathname()
+
     useEffect(() => {
         if(Cookies.get('token') !== undefined) {
             setIsAuth(true)
@@ -42,8 +62,22 @@ export default function GlobalState({children}) {
             setCartItems(crtItm)
         } else {
             setIsAuth(false)
+            setUser({}) //Unauthenticated user
         }
     }, [Cookies])
+
+    //redirects to login page if user is not logged in
+    useEffect(() => {
+        if (user && Object.keys(user).length === 0 && protectedRoutes.indexOf(pathName) > -1) {
+            router.push('/login')
+        }
+    }, [user, pathName])
+
+    //redirects user to unauthorized page if said user does not have an admin role 
+    useEffect(() => {
+        if (user !== null && user && Object.keys(user).length > 0 && user?.role !== 'admin' && protectedAdminRoutes.indexOf(pathName) > -1)
+            router.push('/unauthorized')
+    }, [user, pathName])
 
     return (
         <>
