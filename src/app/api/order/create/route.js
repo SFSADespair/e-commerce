@@ -13,7 +13,8 @@ export const POST = async(req) => {
         const isAuth = ((await AuthUser(req)).valueOf())
         if (isAuth) {
             const data = await req.json()
-            const {user} = data
+            const { user } = data
+            console.log(data)
             const saveOrder = await Order.create(data)
             if (saveOrder) {
                 await Cart.deleteMany({ userID: user })

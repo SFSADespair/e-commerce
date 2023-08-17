@@ -31,7 +31,7 @@ export async function POST(req) {
                 name, price, description, imageUrl, category, sizes, onSale, deliveryInfo, priceDrop 
             } = data
             
-            const {error} = AddNewProductSchema.validate({
+            const { error } = AddNewProductSchema.validate({
                 name, price, description, imageUrl, category, sizes, onSale, deliveryInfo, priceDrop 
             })
             if(error)

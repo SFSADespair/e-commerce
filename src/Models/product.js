@@ -10,7 +10,6 @@ const ProductSchema = new mongoose.Schema({
     onSale: String,
     priceDrop: Number,
     imageUrl: String
-
 }, { timestamps: true })
 
 const Product = mongoose.models.Product || mongoose.model('Product', ProductSchema)

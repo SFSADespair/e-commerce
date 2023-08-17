@@ -32,7 +32,9 @@ export default function GlobalState({children}) {
         postalCode: ''
     })
     const [checkoutFormData, setCheckoutFormData] = useState(initCheckoutFormData)
+    const [allUserOrders, setAllUserOrders] = useState([])
 
+    //protected routes
     const protectedRoutes = [
         '/cart',
         '/checkout',
@@ -92,7 +94,8 @@ export default function GlobalState({children}) {
                 cartItems, setCartItems,
                 addressList, setAddressList,
                 addressFormData, setAddressFormData,
-                checkoutFormData, setCheckoutFormData
+                checkoutFormData, setCheckoutFormData,
+                allUserOrders, setAllUserOrders
             }}>
                 {children}
             </GlobalContext.Provider>
