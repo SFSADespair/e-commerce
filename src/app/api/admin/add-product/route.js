@@ -24,22 +24,25 @@ export async function POST(req) {
         await connectDB()
         
         const isAuth = (await AuthUser(req)).valueOf()
-
+        // Checks if the user has the admin role
         if(isAuth?.role === 'admin') {
             const data = await req.json()
             const { 
                 name, price, description, imageUrl, category, sizes, onSale, deliveryInfo, priceDrop 
             } = data
             
+            //validates the data that has been passed through
             const { error } = AddNewProductSchema.validate({
                 name, price, description, imageUrl, category, sizes, onSale, deliveryInfo, priceDrop 
             })
+            //returns an error if the data is not valid
             if(error)
                 return NextResponse.json({
                     success: false,
                     message: error.details[0].message
                 })
             
+            //Creates a new product and sends it to the DB if the data is valid
             const newProduct = await Product.create(data)
             if (newProduct)
                 return NextResponse.json({

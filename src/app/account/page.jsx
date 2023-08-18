@@ -7,6 +7,7 @@ import Notification from "@/components/Notification"
 import { GlobalContext } from "@/context"
 import { addAddress, deleteAddress, getAddressList, updateAddress } from "@/services/address"
 import { addNewAddressFormControls } from "@/utils"
+import { useRouter } from "next/navigation"
 import { useContext, useEffect, useState } from "react"
 import { toast } from "react-toastify"
 
@@ -23,6 +24,8 @@ export default function Account() {
         addressFormData, setAddressFormData,
         pageLevelLoader, setpageLevelLoader 
     } = useContext(GlobalContext)
+
+    const router = useRouter()
 
     const [showForm, setShowForm] = useState(false)
     const [currentUpdatedAddressId,  setCurrentUpdatedAddressId] = useState(null)
@@ -123,7 +126,7 @@ export default function Account() {
                             <p>Email: {user?.email}</p>
                             <p>Role: {user?.role}</p>
                         </div>
-                        <button className={styles.button}>View your orders</button>
+                        <button className={styles.button} onClick={() => router.push('/orders')}>View your orders</button>
                         <div className="mt-6">
                             <h1 className="font-bold text-lg">Your Address List:</h1>
                             {

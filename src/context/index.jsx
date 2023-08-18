@@ -33,6 +33,7 @@ export default function GlobalState({children}) {
     })
     const [checkoutFormData, setCheckoutFormData] = useState(initCheckoutFormData)
     const [allUserOrders, setAllUserOrders] = useState([])
+    const [orderDetails, setOrderDetails] = useState(null)
 
     //protected routes
     const protectedRoutes = [
@@ -95,7 +96,8 @@ export default function GlobalState({children}) {
                 addressList, setAddressList,
                 addressFormData, setAddressFormData,
                 checkoutFormData, setCheckoutFormData,
-                allUserOrders, setAllUserOrders
+                allUserOrders, setAllUserOrders,
+                orderDetails, setOrderDetails
             }}>
                 {children}
             </GlobalContext.Provider>

@@ -37,7 +37,7 @@ export const allOrders = async(id) => {
     }
 }
 
-export const orderDetails = async(id) => {
+export const ordrDetails = async(id) => {
     try {
         const res = await fetch(`/api/order/details?id=${id}`, {
             method: 'GET',

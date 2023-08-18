@@ -3,6 +3,7 @@
 import PageLevelLoader from "@/components/Loader/pagelevel"
 import { GlobalContext } from "@/context"
 import { allOrders } from "@/services/orders"
+import { useRouter } from "next/navigation"
 import { useContext, useEffect } from "react"
 import { toast } from "react-toastify"
 
@@ -17,6 +18,9 @@ export default function Orders() {
         allUserOrders, setAllUserOrders
     } = useContext(GlobalContext)
 
+    const router = useRouter()
+
+    //Gets all the orders from the user
     const getOrders = async() => {
         setpageLevelLoader(true)
         const res = await allOrders(user?._id)
@@ -31,11 +35,10 @@ export default function Orders() {
         }
     }
 
+    //use Effect to keep the page update everytime the user's data changes
     useEffect(() => {
         if (user !== null) getOrders()
     }, [user])
-
-    console.log(allUserOrders)
 
     if (pageLevelLoader) {
         return (
@@ -86,7 +89,7 @@ export default function Orders() {
                                                             <button className={styles.button}>
                                                                 {order.isProcessing ? 'Order is Processing' : 'Delivered'}
                                                             </button>
-                                                            <button className={styles.button}>
+                                                            <button className={styles.button} onClick={() => router.push(`/orders/${order._id}`)}>
                                                                 View Order Details
                                                             </button>
                                                         </div>
