@@ -16,11 +16,25 @@ export default function Cart() {
         componentLevelLoader, setComponentLevelLoader 
     } = useContext(GlobalContext)
 
+    //Add cart item
     const getCart = async() => {
         setpageLevelLoader(true)
         const res = await getCartItems(user?._id)
         if(res.success) {
-            setCartItems(res.data)
+            //Only display the sale price in the cart if the item is on sale
+            const updatedData = (
+                res.data && res.data.length ? 
+                res.data.map(item => ({
+                    ...item,
+                    productID: {
+                        ...item.productID,
+                        price: item.productID.onSale === 'yes' ? parseInt(
+                            (item.productID.price - (item.productID.price * (item.productID.priceDrop/100))).toFixed(2))
+                        : item.productID.price
+                    }
+                }) ) : []
+            )
+            setCartItems(updatedData)
             setpageLevelLoader(false)
             localStorage.setItem('cartItems', JSON.stringify(res.data))
         }
@@ -31,6 +45,7 @@ export default function Cart() {
             getCart()
     }, [user])
 
+    //Remove product from cart
     const handleRemove = async (id) => {
         setComponentLevelLoader({ loading: true, id: id})
 
