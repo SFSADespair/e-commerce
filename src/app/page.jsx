@@ -1,0 +1,139 @@
+'use client'
+
+import { GlobalContext } from "@/context"
+import { getAllProducts } from "@/services/product"
+import { useRouter } from "next/navigation"
+import { useContext, useEffect, useState } from "react"
+
+const styles = {
+    button: 'mt-5 mb-5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide border border-gray-500 text-white rounded-3xl',
+}
+
+export default function Home() {
+  	const { isAuth, user } = useContext(GlobalContext)
+	const [products, setProducts] = useState([])
+
+	const router = useRouter()
+
+	//Get the product list
+	const getProductList  = async() => {
+		const res = await getAllProducts()
+
+		if (res.success) {
+			setProducts(res.data)
+		}
+	}
+
+	useEffect(() => {
+		getProductList()
+	}, [])
+
+	return (
+		<main className="flex min-h-screen flex-col items-center justify-between p-24">
+			<section>
+				<div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+					<div className="mr-auto  place-self-center lg:col-span-7">
+						<h1 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl">
+							Best Fashion Collection
+						</h1>
+						<p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl">
+							Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
+							molestiae quas vel sint commodi repudiandae
+						</p>
+						<button onClick={() => router.push('/product/all-products')} type='button' className={styles.button}>Explore</button>
+					</div>
+					<div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
+						<img 
+							src='https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+							alt='Explore'
+							className="rounded-lg"
+						/>
+					</div>
+				</div>
+				<div className="max-w-screen-xl px-4 py-8 mx-auto sm:py-12 sm:px-6 lg:px-8  shadow-xl rounded-xl">
+					<div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:items-stretch border border-gray-200 px-4 py-4 rounded-lg">
+						<div className="grid p-6 bg-gray-200 rounded-lg place-content-center sm:p-8">
+							<div className="max-w-md mx-auto text-center lg:text-left">
+								<div className="">
+									<h2 className="text-xl font-bold text-gray-900 sm:text-3xl">Spring Sale Collection</h2>
+									<button className={styles.button}>Shop All</button>
+								</div>
+							</div>
+							
+						</div>
+						<div className="lg:col-span-2 lg:py-8">
+							<ul className="grid grid-cols-2 gap-4">
+								{
+									products && products.length  ? 
+									products.filter(item => item.onSale === 'yes').splice(0.2).map(productItem => (
+										<li onClick={() => router.push(`/product/${productItem._id}`)} key={productItem._id} className="cursor-pointer">
+											<div>
+												<img 
+													src={productItem.imageUrl}
+													alt='Sale item'
+													className="rounded-xl object-cover w-full aspect-square"
+												/>
+											</div>
+											<div className="mt-3">
+												<h3 className="font-medium text-gray-900">{productItem.name}</h3>
+												<p className="mt-1 text-sm text-gray-800">
+													R{productItem.price} <span className="text-red-700">
+																			{`(-${productItem.priceDrop}%) off`}
+																		 </span>
+												</p>
+											</div>
+										</li>
+									)) : null
+								}
+							</ul>
+						</div>
+					</div>
+				</div>
+				{/* Category */}
+				<div className="max-w-screen-xl  px-4 py-8 mx-auto sm:px-6 sm:py-12 lg:px-8 shadow-xl rounded-xl mt-10 border border-gray-150">
+					<div className="text-center">
+						<h2 className="text-xl font-bold text-gray-950 sm:text-3xl">SHOP BY CATEGORY</h2>
+					</div>
+					<ul className="grid grid-cols-1 gap-4 mt-8 lg:grid-cols-3">
+						<li>
+							<div className="relative block group border border-gray-300 rounded-lg">
+								<img 
+									src="https://images.unsplash.com/photo-1618898909019-010e4e234c55?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
+									className="object-cover w-full rounded-lg aspect-square"
+								/>
+								<div className="absolute inset-0 flex flex-col items-start justify-end p-6">
+									<h3 className="text-xl font-medium text-white">Kids</h3>
+									<button onClick={() => router.push('/product/kids')} className={styles.button}>Shop Now</button>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div className="relative block group border border-gray-200 rounded-lg">
+								<img 
+									src="https://images.unsplash.com/photo-1624623278313-a930126a11c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
+									className="object-cover w-full rounded-lg aspect-square"
+								/>
+								<div className="absolute inset-0 flex flex-col items-start justify-end p-6">
+									<h3 className="text-xl font-medium text-white">Men</h3>
+									<button onClick={() => router.push('/product/men')} className={styles.button}>Shop Now</button>
+								</div>
+							</div>
+						</li>
+						<li className="lg:col-span-2 lg:col-start-2 lg:row-span-2 lg:row-start-1">
+							<div className="relative block group border border-gray-200 rounded-lg">
+								<img 
+									src="https://images.unsplash.com/photo-1593795899768-947c4929449d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2672&q=80"
+									className="object-cover w-full rounded-lg aspect-square"
+								/>
+								<div className="absolute inset-0 flex flex-col items-start justify-end p-6">
+									<h3 className="text-xl font-medium text-white">Women</h3>
+									<button onClick={() => router.push('/product/women')} className={styles.button}>Shop Now</button>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</section>
+		</main>
+	)
+}
