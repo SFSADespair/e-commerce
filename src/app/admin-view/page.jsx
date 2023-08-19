@@ -1,25 +1,30 @@
 'use client'
 
+import ComponentLevelLoader from "@/components/Loader/componentlevel"
 import PageLevelLoader from "@/components/Loader/pagelevel"
+import Notification from "@/components/Notification"
 import { GlobalContext } from "@/context"
-import { adminUserOrders } from "@/services/orders"
+import { adminUserOrders, updateOrderStatus } from "@/services/orders"
 import { useRouter } from "next/navigation"
 import { useContext, useEffect } from "react"
+import { toast } from "react-toastify"
 
 //CSS Styles
 const styles = {
-    button: 'mt-5 mb-5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide border border-gray-500 text-white rounded-3xl',
+    button: 'disabled:opacity-50 mt-5 mb-5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide border border-gray-500 text-white rounded-3xl',
 }
 
 export default function AdminView() {
     const {
         user,
         pageLevelLoader, setpageLevelLoader,
+        componentLevelLoader, setComponentLevelLoader,
         adminOrders, setAdminOrders
     } =  useContext(GlobalContext)
 
     const router = useRouter()
 
+    //Get all the users' orders except the current user's
     const getOrders = async() => {
         setpageLevelLoader(true)
 
@@ -37,11 +42,37 @@ export default function AdminView() {
         }
     }
 
+    //Update the order process
+    const handleUpdate = async(order) => {
+        setComponentLevelLoader({loading: true, id: order._id})
+
+        const res = await updateOrderStatus({   
+            ...order,
+            isProcessing: false
+        })
+
+        if (res.success) {
+            toast.success(res.message, {
+                position: toast.POSITION.TOP_RIGHT
+            })
+            getOrders()
+            setComponentLevelLoader({loading: false, id: ''})
+
+        } else {
+            toast.error(res.message, {
+                position: toast.POSITION.TOP_RIGHT
+            })
+            setComponentLevelLoader({loading: false, id: ''})
+        }
+    }
+
+    //Get orders whenever user changes
     useEffect(() => {
         if (user !== null)
             getOrders()
     }, [user])
 
+    //Show pulse loader when pageLevelLoader is false
     if (pageLevelLoader) {
         return (
             <div className="w-full min-h-screen flex justify-center items-center">
@@ -102,8 +133,21 @@ export default function AdminView() {
                                                             <button className={styles.button}>
                                                                 {order.isProcessing ? 'Order is Processing' : 'Delivered'}
                                                             </button>
-                                                            <button className={styles.button} onClick={() => router.push(`/orders/${order._id}`)}>
-                                                                Update Order Status
+                                                            <button className={styles.button} 
+                                                                //Disable button if order is delivered 
+                                                                disabled={!order.isProcessing}
+                                                                onClick={() => handleUpdate(order)}
+                                                            >
+                                                                {
+                                                                    componentLevelLoader && componentLevelLoader.loading 
+                                                                    && componentLevelLoader.is === order._id ? (
+                                                                        <ComponentLevelLoader 
+                                                                            color={'#ffff'}
+                                                                            loading={componentLevelLoader && componentLevelLoader.loading}
+                                                                        />
+                                                                    ) :
+                                                                    'Update Order Status'
+                                                                }
                                                             </button>
                                                         </div>
                                                     </li>
@@ -116,6 +160,7 @@ export default function AdminView() {
                         </div>
                     </div>
                 </div>
+                <Notification />
             </div>
         </section>
         </>
