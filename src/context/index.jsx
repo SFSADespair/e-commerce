@@ -70,7 +70,7 @@ export default function GlobalState({children}) {
 
     //redirects to login page if user is not logged in
     useEffect(() => {
-        if (pathName !== '/register' && user && Object.keys(user).length === 0 && protectedRoutes.includes(pathName) > -1) {
+        if (pathName !== '/register' && pathName !== '/' && user && Object.keys(user).length === 0 && protectedRoutes.includes(pathName) > -1) {
             router.push('/login')
         }
     }, [user, pathName])
