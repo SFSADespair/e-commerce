@@ -9,7 +9,10 @@ export const createOrder = async(formData) => {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
-                Authorization: `Bearer ${Cookies.get('token')}`
+                Authorization: `Bearer ${Cookies.get('token')}`,
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
             },
             body: JSON.stringify(formData)
         })
@@ -28,7 +31,10 @@ export const allOrders = async(id) => {
             method: 'GET',
             cache: 'no-store',
             headers: {
-                Authorization: `Bearer ${Cookies.get('token')}`
+                Authorization: `Bearer ${Cookies.get('token')}`,
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
             }
         })
 
@@ -46,7 +52,10 @@ export const ordrDetails = async(id) => {
             method: 'GET',
             cache: 'no-store',
             headers: {
-                Authorization: `Bearer ${Cookies.get('token')}`
+                Authorization: `Bearer ${Cookies.get('token')}`,
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
             }
         })
 
@@ -64,7 +73,10 @@ export const adminUserOrders = async() => {
             method: 'GET',
             cache: 'no-store',
             headers: {
-                Authorization: `Bearer ${Cookies.get('token')}`
+                Authorization: `Bearer ${Cookies.get('token')}`,
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
             }
         })
 
@@ -83,7 +95,10 @@ export const updateOrderStatus = async(formData) => {
             cache: 'no-store',
             headers: {
                 'content-type': 'application/json',
-                Authorization: `Bearer ${Cookies.get('token')}`
+                Authorization: `Bearer ${Cookies.get('token')}`,
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
             },
             body: JSON.stringify(formData)
         })

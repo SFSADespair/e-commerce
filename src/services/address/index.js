@@ -27,6 +27,9 @@ export const getAddressList = async(id) => {
             method: 'GET',
             cache: 'no-store',
             headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
                 Authorization: `Bearer ${Cookies.get('token')}`
             }
         })
@@ -44,7 +47,10 @@ export const updateAddress = async(formData) => {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json',
-                Authorization: `Bearer ${Cookies.get('token')}`
+                Authorization: `Bearer ${Cookies.get('token')}`,
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
             },
             body: JSON.stringify(formData)
         })
@@ -61,6 +67,9 @@ export const deleteAddress = async(id) => {
         const res = await fetch(`/api/address/delete-address?id=${id}`, {
             method: 'DELETE',
             headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
                 Authorization: `Bearer ${Cookies.get('token')}`
             }
         })

@@ -7,6 +7,9 @@ export const addToCart = async(formData) => {
         const res = await fetch('/api/client/cart/add-to-cart', {
             method: 'POST',
             headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
                 'content-type': 'application/json',
                 Authorization: `Bearer ${Cookies.get('token')}`
             },
@@ -25,7 +28,10 @@ export const getCartItems = async(id) => {
         const res = await fetch(`${URL}/api/client/cart/cart-items?id=${id}`, {
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${Cookies.get('token')}`
+                Authorization: `Bearer ${Cookies.get('token')}`,
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
             }
         })
 
@@ -42,7 +48,10 @@ export const deleteCartItem = async(id) => {
             method: 'DELETE',
             cache: 'no-store',
             headers: {
-                Authorization: `Bearer ${Cookies.get('token')}`
+                Authorization: `Bearer ${Cookies.get('token')}`,
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
             }
         })
 

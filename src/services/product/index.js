@@ -42,7 +42,10 @@ export const updateProduct = async(formData) => {
             cache: 'no-store',
             headers: {
                 'content-type': 'application/json',
-                Authorization: `Bearer ${Cookies.get('token')}`
+                Authorization: `Bearer ${Cookies.get('token')}`,
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
             },
             body: JSON.stringify(formData)
         })
@@ -62,7 +65,10 @@ export const deleteProduct = async(id) => {
             method: 'DELETE',
             cache: 'no-store',
             headers: {
-                Authorization: `Bearer ${Cookies.get('token')}`
+                Authorization: `Bearer ${Cookies.get('token')}`,
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
             }
         })
 
@@ -78,7 +84,12 @@ export const categoryProduct = async(id) => {
     try {
         const res = await fetch(`${URL}/api/client/category?id=${id}`, {
             method: 'GET',
-            cache: 'no-store'
+            cache: 'no-store',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+            }
         })
         const data = await res.json()
 
@@ -92,7 +103,12 @@ export const getProduct = async(id) => {
     try {
         const res = await fetch(`${URL}/api/client/product-id?id=${id}`, {
             method: 'GET',
-            cache: 'no-store'
+            cache: 'no-store',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+            }
         })
         const data = await res.json()
 
