@@ -2,6 +2,7 @@ import Cookies from "js-cookie"
 
 const URL = 'http://localhost:3000'
 
+//Allow the user to create an order
 export const createOrder = async(formData) => {
     try {
         const res = await fetch('/api/order/create', {
@@ -20,6 +21,7 @@ export const createOrder = async(formData) => {
     }
 }
 
+//Get all the orders from the users
 export const allOrders = async(id) => {
     try {
         const res = await fetch(`/api/order/orders?id=${id}`, {
@@ -37,6 +39,7 @@ export const allOrders = async(id) => {
     }
 }
 
+//Get order details
 export const ordrDetails = async(id) => {
     try {
         const res = await fetch(`/api/order/details?id=${id}`, {
@@ -45,6 +48,44 @@ export const ordrDetails = async(id) => {
             headers: {
                 Authorization: `Bearer ${Cookies.get('token')}`
             }
+        })
+
+        const data = await res.json()
+        return data
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+//Get all orders from all users
+export const adminOrders = async() => {
+    try {
+        const res = await fetch(`/api/admin/orders`, {
+            method: 'GET',
+            cache: 'no-store',
+            headers: {
+                Authorization: `Bearer ${Cookies.get('token')}`
+            }
+        })
+
+        const data = await res.json()
+        return data
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+//Update the order status
+export const updateOrderStatus = async(formData) => {
+    try {
+        const res = await fetch(`/api/admin/orders/update`, {
+            method: 'PUT',
+            cache: 'no-store',
+            headers: {
+                'content-type': 'application/json',
+                Authorization: `Bearer ${Cookies.get('token')}`
+            },
+            body: JSON.stringify(formData)
         })
 
         const data = await res.json()
