@@ -59,7 +59,7 @@ export default function Details() {
             <div className="bg-white border border-gray-300 shadow-xl px-6 py-8 rounded-xl">
             <div className="flex justify-start item-start space-y-2 flex-col">
                     <h1 className="text-3xl lg:text-4xl font-bold leading-7 lg:leading-9 text-gray-900 overflow-hidden text-ellipsis">
-                        Order #{orderDetails?._id}
+                        Order #{orderDetails && orderDetails?._id}
                     </h1>
                     <p className="text-base font-medium leading-6 text-gray-600">
                         {
