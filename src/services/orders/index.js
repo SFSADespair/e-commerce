@@ -58,7 +58,7 @@ export const ordrDetails = async(id) => {
 }
 
 //Get all orders from all users
-export const adminOrders = async() => {
+export const adminUserOrders = async() => {
     try {
         const res = await fetch(`/api/admin/orders`, {
             method: 'GET',
