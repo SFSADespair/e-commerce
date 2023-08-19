@@ -5,7 +5,7 @@ import { NextResponse } from "next/server"
 const stripe = require('stripe')(process.env.secretK)
 
 export const dynamic = 'force-dynamic'
-const URL = 'http://localhost:3000/checkout'
+const URL = 'https://oompie-store.vercel.app/checkout'
 
 export const POST = async(req) => {
     try {

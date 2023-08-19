@@ -1,7 +1,7 @@
 import Cookies from "js-cookie"
 import { Cookie } from "next/font/google"
 
-const URL = 'http://localhost:3000'
+const URL = 'https://oompie-store.vercel.app'
 
 export const addAddress = async(formData) => {
     try {

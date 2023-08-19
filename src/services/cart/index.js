@@ -1,6 +1,6 @@
 import Cookies from "js-cookie"
 
-const URL = 'http://localhost:3000'
+const URL = 'https://oompie-store.vercel.app'
 
 export const addToCart = async(formData) => {
     try {
