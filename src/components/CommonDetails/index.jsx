@@ -50,12 +50,10 @@ export default function CommonDetails({ item }) {
                             <div className="lg:flex lg:items-start">
                                 <div className="lg:order-2 lg:ml-5">
                                     <div className="mx-w-xl overflow-hidden rounded-lg">
-                                        <Image
+                                        <img
                                             src={item.imageUrl}
                                             className="h-full w-full max-w-full object-cover"
                                             alt="Product Details"
-                                            width={1000}
-                                            height={1000}
                                         />
                                     </div>
                                 </div>
@@ -65,24 +63,20 @@ export default function CommonDetails({ item }) {
                                             type='button'
                                             className="flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-2 border-gray-100 text-center"
                                         >
-                                            <Image
+                                            <img
                                                 src={item.imageUrl}
                                                 className="h-full w-full object-cover"
                                                 alt="Product Details"
-                                                width={1000}
-                                                height={200}
                                             />
                                         </button>
                                         <button
                                             type='button'
                                             className="flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-2 border-gray-100 text-center"
                                         >
-                                            <Image
+                                            <img
                                                 src={item.imageUrl}
                                                 className="h-full w-full object-cover"
                                                 alt="Product Details"
-                                                width={200}
-                                                height={200}
                                             />
                                         </button>
                                     </div>

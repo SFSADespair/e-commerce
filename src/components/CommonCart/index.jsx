@@ -30,7 +30,7 @@ export default function CommonCart({ cartItems, handleRemove, componentLevelLoad
                                                 className="flex-col flex-space-y-3 py-6 text-left sm:flex-row sm:space-x-5 sm:space-y-0"
                                             >
                                                 <div className="shrink-0">
-                                                    <Image 
+                                                    <img 
                                                         src={cartItem && cartItem.productID && cartItem.productID.imageUrl}
                                                         width={200}
                                                         height={300}
