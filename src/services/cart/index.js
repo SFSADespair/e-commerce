@@ -48,10 +48,10 @@ export const deleteCartItem = async(id) => {
             method: 'DELETE',
             cache: 'no-store',
             headers: {
-                Authorization: `Bearer ${Cookies.get('token')}`,
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+                Authorization: `Bearer ${Cookies.get('token')}`,
             }
         })
 
