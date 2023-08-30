@@ -6,8 +6,8 @@ import Navbar from '@/components/Navbar'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'E-Commerce',
-  description: 'E-commerce app for practice',
+  title: 'Oompie-Store',
+  description: 'Discover trendy and affordable clothing at Oompie-Store. Shop a wide range of stylish apparel for men, women, and kids. Find your fashion favorites today!',
 }
 
 export default function RootLayout({ children }) {
