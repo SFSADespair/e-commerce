@@ -122,7 +122,7 @@ export default function Navbar() {
                             
                             ) : (
                                 <Link href="/login">
-                                    LogOut
+                                    LogIn
                                 </Link>
                             )
                         }
