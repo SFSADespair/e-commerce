@@ -37,8 +37,7 @@ export default function Home() {
 							Best Fashion Collection
 						</h1>
 						<p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl">
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-							molestiae quas vel sint commodi repudiandae
+							Oompie-Store: Where Fashion Dreams Come True | Shop Stylish Clothing Ensembles for the Whole Family.
 						</p>
 						<button onClick={() => router.push('/product/all-products')} type='button' className={styles.button}>Explore</button>
 					</div>
