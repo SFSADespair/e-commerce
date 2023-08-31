@@ -51,6 +51,11 @@ export default function GlobalState({children}) {
         '/admin-view/all-products'
     ]
 
+    const allowedRoutes = [
+        'products',
+        'details'
+    ]
+
     const router = useRouter()
     const pathName = usePathname()
 
@@ -70,7 +75,7 @@ export default function GlobalState({children}) {
 
     //redirects to login page if user is not logged in
     useEffect(() => {
-        if (user && Object.keys(user).length === 0 && protectedRoutes.includes(pathName) > -1) {
+        if (pathName !== '/register' && pathName !== '/' && allowedRoutes.includes(pathName) && user && Object.keys(user).length === 0 && protectedRoutes.includes(pathName) > -1) {
             router.push('/login')
         }
     }, [user, pathName])
