@@ -1,10 +1,14 @@
 'use client'
 
 import { useRouter } from "next/navigation"
-import ProductButtons from "./ProductButtons"
-import ProductTile from "./ProductTile"
+// import ProductButtons from "./ProductButtons"
+// import ProductTile from "./ProductTile"
 import { useEffect } from "react"
 import Notification from "../Notification"
+import dynamic from "next/dynamic"
+
+const ProductTile = dynamic(() => import("@/components/CommonListing/ProductTile"), {ssr: false})
+const ProductButtons = dynamic(() => import("@/components/CommonListing/ProductButtons"), {ssr: false})
 
 export default function CommonListing({ data }) {
     const router = useRouter()
