@@ -1,12 +1,14 @@
 'use client'
 
-import CommonCart from "@/components/CommonCart"
+// import CommonCart from "@/components/CommonCart"
 import PageLevelLoader from "@/components/Loader/pagelevel"
 import { GlobalContext } from "@/context"
 import { deleteCartItem, getCartItems } from "@/services/cart"
 import { useContext, useEffect } from "react"
-import { PulseLoader } from "react-spinners"
 import { toast } from "react-toastify"
+import dynamic from "next/dynamic"
+
+const CommonCart = dynamic(() => import("@/components/CommonCart"), {ssr: false})
 
 export default function Cart() {
     const { 
