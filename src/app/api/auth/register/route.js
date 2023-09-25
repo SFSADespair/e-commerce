@@ -22,7 +22,7 @@ export const POST = async(req) => {
     //validate values using the joi schema
     const { error } = schema.validate({ name, email, password, role })
 
-    if(error) {
+    if (error) {
         return NextResponse.json({
             success: false,
             message: error.details[0].message
@@ -30,7 +30,7 @@ export const POST = async(req) => {
     }
 
     try {
-        const userExist = await User.findOne({email})
+        const userExist = await User.findOne({ email })
         if (userExist)
             return NextResponse.json({
                 success: false,
@@ -52,7 +52,7 @@ export const POST = async(req) => {
                     message: 'Account Created'
                 })
         }
-    } catch(e) {
+    } catch (e) {
         console.log(e);
 
         return NextResponse.json({

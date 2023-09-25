@@ -87,7 +87,7 @@ export default function CommonDetails({ item }) {
                             <h1 className="text-2xl font-bold text-gray-900 ">
                                 {item && item.name}
                             </h1>
-                            <div className="mt-10 flex flex-row items-center justify-between space-y-4 border-t border-b py-4 sm:flex-row sm:space-y-0">
+                            <div className="mt-10 grid flex-cols items-center justify-between space-y-4 border-t border-b py-4 lg:flex-row sm:space-y-0">
                                 <div className="flex items-end">
                                     <h1 className={`text-3xl font-bold mr-2 ${item.onSale === 'yes' ? 'line-through text-gray-400' : ''}`}>${item && item.price}</h1>
                                     {item.onSale === 'yes' ? (
@@ -96,19 +96,21 @@ export default function CommonDetails({ item }) {
                                         </h1>
                                     ) : null}
                                 </div>
-                                <button type='button'
-                                    onClick={() => handleAddCart(item)}
-                                    className="mt-1.5 inline-block rounded-3xl bg-black px-5 py-3 text-xs font-medium tracking-wide uppercaase text-white"
-                                >
-                                    {
-                                        componentLevelLoader && componentLevelLoader.loading
-                                        && componentLevelLoader.id === item._id ? 
-                                        <ComponentLevelLoader
-                                            color={'#fff'}
-                                            loading={componentLevelLoader && componentLevelLoader.loading}                 
-                                        /> : 'Add To Cart'
-                                    }
-                                </button>
+                                <div className="btn">
+                                    <button type='button'
+                                        onClick={() => handleAddCart(item)}
+                                        className="mt-1.5 inline-block rounded-3xl bg-black px-5 py-3 text-xs font-medium tracking-wide uppercaase text-white"
+                                    >
+                                        {
+                                            componentLevelLoader && componentLevelLoader.loading
+                                            && componentLevelLoader.id === item._id ? 
+                                            <ComponentLevelLoader
+                                                color={'#fff'}
+                                                loading={componentLevelLoader && componentLevelLoader.loading}                 
+                                            /> : 'Add To Cart'
+                                        }
+                                    </button>
+                                </div>
                             </div>
                             <ul className="mt-8 space-y-2">
                                 <li className="flex items-center text-left text-sm font-medium text-gray-600">{item && item.deliveryInfo}</li>

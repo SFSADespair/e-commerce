@@ -29,7 +29,7 @@ export default function Home() {
 	}, [])
 
 	return (
-		<main className="flex min-h-screen flex-col items-center justify-between p-24">
+		<main className="flex min-h-screen flex-col items-center justify-between p-10">
 			<section>
 				<div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
 					<div className="mr-auto  place-self-center lg:col-span-7">
@@ -37,8 +37,7 @@ export default function Home() {
 							Best Fashion Collection
 						</h1>
 						<p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl">
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-							molestiae quas vel sint commodi repudiandae
+							Oompie-Store: Where Fashion Dreams Come True | Shop Stylish Clothing Ensembles for the Whole Family.
 						</p>
 						<button onClick={() => router.push('/product/all-products')} type='button' className={styles.button}>Explore</button>
 					</div>
@@ -62,7 +61,7 @@ export default function Home() {
 							
 						</div>
 						<div className="lg:col-span-2 lg:py-8">
-							<ul className="grid grid-cols-2 gap-4">
+							<ul className="grid grid-cols-1 lg:grid-cols-2 gap-4">
 								{
 									products && products.length  ? 
 									products.filter(item => item.onSale === 'yes').splice(0.2).map(productItem => (
