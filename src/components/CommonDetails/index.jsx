@@ -8,6 +8,7 @@ import { useContext } from "react"
 import { toast } from "react-toastify"
 import ComponentLevelLoader from "../Loader/componentlevel"
 import Notification from "../Notification"
+import Comments from "../Comments"
 
 
 export default function CommonDetails({ item }) {
@@ -129,7 +130,9 @@ export default function CommonDetails({ item }) {
                                 </div>
                             </div>
                         </div>
-
+                    </div>
+                    <div className="flex flex-col mt-20">
+                        <Comments />
                     </div>
                 </div>
                 <Notification />
