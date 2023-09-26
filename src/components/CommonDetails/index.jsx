@@ -46,7 +46,7 @@ export default function CommonDetails({ item }) {
         <>
             <section className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 mb-16">
                 <div className="container mx-auto px-4">
-                    <div className="lg:col-gap-12 xl:col-gap-16 mt-8 grid grid-cols-1 gap-12 lg:mt-12 lg:grid-cols-5 lg:gap-16">
+                    <div className="lg:col-gap-12 xl:col-gap-16 mt-8 grid grid-cols-1 gap-12 lg:mt-12 lg:grid-cols-5 lg:gap-16 border-b border-gray-400">
                         <div className="lg:col-span-3 lg:row-end-1">
                             <div className="lg:flex lg:items-start">
                                 <div className="lg:order-2 lg:ml-5">
@@ -84,7 +84,7 @@ export default function CommonDetails({ item }) {
                                 </div>
                             </div>
                         </div>
-                        <div className="lg:col-span-2 lg:row-span-2 lg:row-end-2">
+                        <div className="lg:col-span-2 lg:row-span-2 lg:row-end-2 mb-20">
                             <h1 className="text-2xl font-bold text-gray-900 ">
                                 {item && item.name}
                             </h1>

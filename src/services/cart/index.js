@@ -1,6 +1,6 @@
 import Cookies from "js-cookie"
 
-const URL = 'https://oompie-store.vercel.app'
+const URL = 'https://oompie-store.vercel.app' || 'http://localhost:3000'
 
 export const addToCart = async(formData) => {
     try {
@@ -16,7 +16,7 @@ export const addToCart = async(formData) => {
             body: JSON.stringify(formData)
         })
 
-        const data = await res.json() 
+        const data = await res.json()
         return data
     } catch (e) {
         console.log(e)
